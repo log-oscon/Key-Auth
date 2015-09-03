@@ -16,7 +16,7 @@
  * @param    mixed    $user    The current user passed in the filter.
  */
 
-class JSON_Key_Auth {
+class WP_REST_Key_Auth {
 
 	/**
 	 * The primary handler for user authentication.
@@ -65,9 +65,9 @@ class JSON_Key_Auth {
 	 * @since     0.1.0
 	 * @param     array     $args      The arguments used for generating the signature. They should be, in order:
 	 *                                 'api_key', 'timestamp', 'request_method', and 'request_uri'.
-	 *                                 Timestamp should be the timestamp passed in the reques.
+	 *                                 Timestamp should be the timestamp passed in the request.
 	 * @param     string    $secret    The shared secret we are using to generate the hash.
-	 * @return    string
+	 * @return    string               Return md5 hash of the secret.
 	 */
 	public static function generateSignature( $args, $secret ) {
 		return md5( json_encode( $args ) . $secret );
@@ -102,4 +102,4 @@ class JSON_Key_Auth {
 	}
 }
 
-add_filter( 'determine_current_user', array( 'JSON_Key_Auth', 'authHandler' ), 20 );
+add_filter( 'determine_current_user',   array( 'WP_REST_Key_Auth', 'authHandler' ), 20 );
