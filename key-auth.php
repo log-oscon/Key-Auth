@@ -4,7 +4,7 @@
  * Description: API/Secret Key Authentication handler for the WP REST API
  * Author: WP REST API Team
  * Author URI: http://wp-api.org
- * Version: 0.1.1
+ * Version: 0.2.0
  * Plugin URI: https://github.com/WP-API/WP-API
  * License: GPL2+
  */
@@ -25,57 +25,110 @@ class WP_REST_Key_Auth {
 	 * @param     mixed    $user    The current user (or bool) passing through the filter.
 	 * @return    mixed             A user on success, or false on failure.
 	 */
-	public static function authHandler( $user ) {
+	public static function auth_handler( $user ) {
 
 		// Don't authenticate twice
 		if ( ! empty( $user ) ) {
 			return $user;
 		}
 
-		if ( !isset( $_SERVER['HTTP_X_API_KEY'] ) ||
-			 !isset( $_SERVER['HTTP_X_API_TIMESTAMP'] ) ||
-			 !isset( $_SERVER['HTTP_X_API_SIGNATURE'] ) ) {
-
+		// Check for request headers
+		if ( ! self::check_request_headers() ) {
 			return $user;
 		}
 
-		$user_id = self::findUserIdByKey( $_SERVER['HTTP_X_API_KEY'] );
+		// Fetch user ID
+		$user_id = self::find_user_id_by_key( $_SERVER['HTTP_X_API_KEY'] );
 
 		if ( ! $user_id ) {
+			self::set_response_headers( 'FAIL api key' );
+			return false;
+		}
+
+		// Check timestamp
+		if ( ! self::valid_timestamp() ) {
+			self::set_response_headers( 'FAIL timestamp' );
 			return false;
 		}
 
 		// Check for the proper HTTP Parameters
 		$signature_args = array(
 			'api_key'        => $_SERVER['HTTP_X_API_KEY'],
-			'timestamp'      => $_SERVER['HTTP_X_API_TIMESTAMP'],
+			'ip'             => $_SERVER['REMOTE_ADDR'],
 			'request_method' => $_SERVER['REQUEST_METHOD'],
+			'request_post'   => $_POST,
 			'request_uri'    => $_SERVER['REQUEST_URI'],
+			'timestamp'      => $_SERVER['HTTP_X_API_TIMESTAMP'],
 		);
 
 		$user_secret   = get_user_meta( $user_id, 'json_shared_secret', true );
-		$signature_gen = self::generateSignature( $signature_args, $user_secret );
+		$signature_gen = self::generate_signature( $signature_args, $user_secret );
 		$signature     = $_SERVER['HTTP_X_API_SIGNATURE'];
 
 		if ( $signature_gen !== $signature ) {
+			self::set_response_headers( 'FAIL signature' );
 			return false;
 		}
+
+		// Set headers
+		self::set_response_headers( 'OK ' . $user_id );
 
 		return $user_id;
 	}
 
 	/**
-	 * Generate signature.
+	 * Checks for the presence of required request headers.
+	 *
+	 * @since     0.2.0
+	 * @return    bool    True if the request headers are present, false otherwise.
+	 */
+	public static function check_request_headers() {
+		return isset( $_SERVER['HTTP_X_API_KEY'] ) &&
+				isset( $_SERVER['HTTP_X_API_TIMESTAMP'] ) &&
+				isset( $_SERVER['HTTP_X_API_SIGNATURE'] );
+	}
+
+	/**
+	 * Sets the response headers.
+	 *
+	 * @since    0.2.0
+	 * @param    string    $value
+	 * @param    string    $key
+	 */
+	public static function set_response_headers( $value, $key = 'X-KEY-AUTH' ) {
+		header( sprintf( '%s: %s', strtoupper( $key ), $value ) );
+	}
+
+	/**
+	 * Checks if the timestamp is within a defined interval.
+	 *
+	 * @since     0.2.0
+	 * @return    bool    True if the timestamp is valid, false otherwise.
+	 */
+	public static function valid_timestamp() {
+
+		$timestamp = intval( $_SERVER['HTTP_X_API_TIMESTAMP'] );
+		$interval  = apply_filters( 'rest_key_auth_timestamp_interval', 5 * MINUTE_IN_SECONDS );
+
+		return abs( time() - $timestamp ) <= $interval;
+	}
+
+	/**
+	 * Generate a hash signature.
 	 *
 	 * @since     0.1.0
 	 * @param     array     $args      The arguments used for generating the signature. They should be, in order:
 	 *                                 'api_key', 'timestamp', 'request_method', and 'request_uri'.
 	 *                                 Timestamp should be the timestamp passed in the request.
 	 * @param     string    $secret    The shared secret we are using to generate the hash.
-	 * @return    string               Return md5 hash of the secret.
+	 * @return    string               Return hash of the secret.
 	 */
-	public static function generateSignature( $args, $secret ) {
-		return md5( json_encode( $args ) . $secret );
+	public static function generate_signature( $args, $secret ) {
+
+		// Name of selected hashing algorithm
+		$algo = apply_filters( 'rest_key_auth_signature_algo', 'sha256' );
+
+		return hash( $algo, json_encode( $args ) . $secret );
 	}
 
 	/**
@@ -83,9 +136,9 @@ class WP_REST_Key_Auth {
 	 *
 	 * @since     0.1.0
 	 * @param     string    $api_key    The API key attached to a user.
-	 * @return    bool
+	 * @return    mixed                 A user ID on success, or false on failure.
 	 */
-	public static function findUserIdByKey( $api_key ) {
+	public static function find_user_id_by_key( $api_key ) {
 
 		$user_args = array(
 			'meta_query' => array(
@@ -113,7 +166,7 @@ class WP_REST_Key_Auth {
 	 * @since    0.2.0
 	 * @param    WP_User    $user    User being edited.
 	 */
-	public static function userProfile( $user ) {
+	public static function user_profile( $user ) {
 
 		$json_api_key       = get_user_meta( $user->ID, 'json_api_key', true );
 		$json_shared_secret = get_user_meta( $user->ID, 'json_shared_secret', true );
@@ -173,7 +226,7 @@ class WP_REST_Key_Auth {
 	 * @since    0.2.0
 	 * @param    int    $user_id    User ID for the user being updated.
 	 */
-	public static function userProfileUpdate( $user_id ) {
+	public static function user_profile_update( $user_id ) {
 
 		// Regenerate API key
 		$regenerate_api_key = isset( $_POST['reset_json_api_key'] ) && $_POST['reset_json_api_key'];
@@ -193,8 +246,8 @@ class WP_REST_Key_Auth {
 
 }
 
-add_filter( 'determine_current_user',   array( 'WP_REST_Key_Auth', 'authHandler' ), 20 );
-add_action( 'show_user_profile',        array( 'WP_REST_Key_Auth', 'userProfile' ), 90 );
-add_action( 'edit_user_profile',        array( 'WP_REST_Key_Auth', 'userProfile' ), 90 );
-add_action( 'personal_options_update',  array( 'WP_REST_Key_Auth', 'userProfileUpdate' ) );
-add_action( 'edit_user_profile_update', array( 'WP_REST_Key_Auth', 'userProfileUpdate' ) );
+add_filter( 'determine_current_user',   array( 'WP_REST_Key_Auth', 'auth_handler' ), 20 );
+add_action( 'show_user_profile',        array( 'WP_REST_Key_Auth', 'user_profile' ), 90 );
+add_action( 'edit_user_profile',        array( 'WP_REST_Key_Auth', 'user_profile' ), 90 );
+add_action( 'personal_options_update',  array( 'WP_REST_Key_Auth', 'user_profile_update' ) );
+add_action( 'edit_user_profile_update', array( 'WP_REST_Key_Auth', 'user_profile_update' ) );
