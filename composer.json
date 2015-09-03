@@ -1,0 +1,24 @@
+{
+  "name": "wp-api/key-auth",
+  "type": "wordpress-plugin",
+  "description": "API/Secret Key Authentication handler for the WP REST API.",
+  "homepage": "http://wp-api.org/",
+  "license": "GPL-2.0+",
+  "keywords": ["wordpress", "plugin"],
+  "authors": [
+    {
+      "name": "WP-API Team",
+      "homepage": "http://wp-api.org/"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/WP-API/Key-Auth/issues",
+    "source": "https://github.com/WP-API/Key-Auth"
+  },
+  "require": {
+    "composer/installers": "~1.0"
+  },
+  "require-dev": {
+    "wp-coding-standards/wpcs": "dev-develop"
+  }
+}
