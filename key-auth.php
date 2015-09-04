@@ -1,12 +1,24 @@
 <?php
 /**
- * Plugin Name: WP REST API Key Authentication
- * Description: API/Secret Key Authentication handler for the WP REST API
- * Author: WP REST API Team
- * Author URI: http://wp-api.org
- * Version: 0.2.0
- * Plugin URI: https://github.com/WP-API/WP-API
- * License: GPL2+
+ * WP REST API Key Authentication
+ *
+ * API/Secret Key Authentication handler for the WP REST API.
+ *
+ * @link              http://log.pt/
+ * @since             1.0.0
+ * @package           WpRestKeyAuth
+ *
+ * @wordpress-plugin
+ * Plugin Name:       WP REST API Key Authentication
+ * Plugin URI:        https://github.com/log-oscon/key-auth
+ * Description:       API/Secret Key Authentication handler for the WP REST API.
+ * Version:           0.2.0
+ * Author:            log.OSCON, Lda.
+ * Author URI:        http://log.pt/
+ * License:           GPL-2.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:       key-auth
+ * Domain Path:       /languages
  */
 
 /**

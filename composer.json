@@ -1,19 +1,25 @@
 {
-  "name": "wp-api/key-auth",
+  "name": "logoscon/key-auth",
   "type": "wordpress-plugin",
   "description": "API/Secret Key Authentication handler for the WP REST API.",
-  "homepage": "http://wp-api.org/",
+  "homepage": "https://github.com/log-oscon/key-auth",
   "license": "GPL-2.0+",
   "keywords": ["wordpress", "plugin"],
   "authors": [
     {
-      "name": "WP-API Team",
-      "homepage": "http://wp-api.org/"
+      "name": "Sérgio Santos",
+      "email": "me@s3rgiosan.com",
+      "homepage": "https://github.com/s3rgiosan"
+    },
+    {
+      "name": "log.OSCON, Lda.",
+      "email": "engenharia@log.pt",
+      "homepage": "http://log.pt/"
     }
   ],
   "support": {
-    "issues": "https://github.com/WP-API/Key-Auth/issues",
-    "source": "https://github.com/WP-API/Key-Auth"
+    "issues": "https://github.com/log-oscon/key-auth/issues",
+    "source": "https://github.com/log-oscon/key-auth"
   },
   "require": {
     "composer/installers": "~1.0"
