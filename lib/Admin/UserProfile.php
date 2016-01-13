@@ -22,7 +22,7 @@
 					if ( ! empty( $api_key ) ) {
 						printf(
 							'<input type="text" name="rest_api_key" id="rest_api_key" value="%s" disabled="disabled" class="regular-text">',
-							$api_key
+							\esc_attr( $api_key )
 						);
 					}
 
@@ -42,7 +42,7 @@
 					if ( ! empty( $api_secret ) ) {
 						printf(
 							'<input type="text" name="rest_api_secret" id="rest_api_secret" value="%s" disabled="disabled" class="regular-text">',
-							$api_secret
+							\esc_attr( $api_secret )
 						);
 					}
 
