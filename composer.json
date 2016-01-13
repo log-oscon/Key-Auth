@@ -21,10 +21,22 @@
     "issues": "https://github.com/log-oscon/key-auth/issues",
     "source": "https://github.com/log-oscon/key-auth"
   },
+  "autoload": {
+    "psr-4": {
+      "logoscon\\RestKeyAuth\\": "lib/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "logoscon\\Tests\\RestKeyAuth\\": "tests/"
+    }
+  },
   "require": {
     "composer/installers": "~1.0"
   },
   "require-dev": {
+    "phpunit/phpunit": "*@stable",
     "wp-coding-standards/wpcs": "dev-develop"
-  }
+  },
+  "suggest": {}
 }
