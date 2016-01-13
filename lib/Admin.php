@@ -48,7 +48,7 @@ class Admin {
 	 * The primary handler for user authentication.
 	 *
 	 * @since     0.1.0
-	 * @param     mixed    $user    The current user (or bool) passing through the filter.
+	 * @param     mixed    $user    User ID if one has been determined, false otherwise.
 	 * @return    mixed             A user on success, or false on failure.
 	 */
 	public function auth_handler( $user ) {
@@ -139,7 +139,15 @@ class Admin {
 
 		$user = \get_users( $user_args );
 
-		if ( empty( $user ) || ! is_array( $user ) ) {
+		if ( empty( $user ) ) {
+			return false;
+		}
+
+		if ( ! is_array( $user ) ) {
+			return false;
+		}
+
+		if ( sizeof( $user ) > 1 ) {
 			return false;
 		}
 
