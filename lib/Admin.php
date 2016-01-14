@@ -87,11 +87,10 @@ class Admin {
 			'timestamp'      => intval( $_SERVER[ 'HTTP_X_API_TIMESTAMP' ] ),
 		);
 
-		$user_secret   = \get_user_meta( $user_id, 'rest_api_secret', true );
-		$signature_gen = self::generate_signature( $signature_args, $user_secret );
-		$signature     = $_SERVER[ 'HTTP_X_API_SIGNATURE' ];
+		$user_secret = \get_user_meta( $user_id, 'rest_api_secret', true );
+		$signature   = self::generate_signature( $signature_args, $user_secret );
 
-		if ( $signature_gen !== $signature ) {
+		if ( $signature !== $_SERVER[ 'HTTP_X_API_SIGNATURE' ] ) {
 			$this->set_response_headers( 'FAIL signature' );
 			return false;
 		}
@@ -186,8 +185,9 @@ class Admin {
 	 *
 	 * @access    private
 	 * @since     1.0.0
-	 * @param     array     $args      The arguments used for generating the signature. They should be, in order:
-	 *                                 'api_key', 'timestamp', 'request_method', and 'request_uri'.
+	 * @param     array     $args      The arguments used for generating the signature.
+	 *                                 They should be, in order:
+	 *                                 'api_key', 'ip', 'request_method', 'request_post', 'request_uri', 'timestamp'
 	 *                                 Timestamp should be the timestamp passed in the request.
 	 * @param     string    $secret    The API secret we are using to generate the hash.
 	 * @return    string               Return hash of the secret.
