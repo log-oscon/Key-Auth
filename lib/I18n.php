@@ -9,11 +9,11 @@
  * @link       http://log.pt/
  * @since      1.0.0
  *
- * @package    RestKeyAuth
- * @subpackage RestKeyAuth/lib
+ * @package    RESTKeyAuth
+ * @subpackage RESTKeyAuth/lib
  */
 
-namespace logoscon\RestKeyAuth;
+namespace logoscon\RESTKeyAuth;
 
 /**
  * Define the internationalization functionality.
@@ -22,8 +22,8 @@ namespace logoscon\RestKeyAuth;
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    RestKeyAuth
- * @subpackage RestKeyAuth/lib
+ * @package    RESTKeyAuth
+ * @subpackage RESTKeyAuth/lib
  * @author     log.OSCON, Lda. <engenharia@log.pt>
  */
 class I18n {

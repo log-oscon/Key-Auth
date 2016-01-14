@@ -9,11 +9,11 @@
  * @link       http://log.pt/
  * @since      1.0.0
  *
- * @package    RestKeyAuth
- * @subpackage RestKeyAuth/lib
+ * @package    RESTKeyAuth
+ * @subpackage RESTKeyAuth/lib
  */
 
-namespace logoscon\RestKeyAuth;
+namespace logoscon\RESTKeyAuth;
 
 /**
  * The core plugin class.
@@ -25,8 +25,8 @@ namespace logoscon\RestKeyAuth;
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    RestKeyAuth
- * @subpackage RestKeyAuth/lib
+ * @package    RESTKeyAuth
+ * @subpackage RESTKeyAuth/lib
  * @author     log.OSCON, Lda. <engenharia@log.pt>
  */
 class Plugin {
@@ -37,7 +37,7 @@ class Plugin {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      RestKeyAuth_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      RESTKeyAuth_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -46,9 +46,9 @@ class Plugin {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $RestKeyAuth    The string used to uniquely identify this plugin.
+	 * @var      string    $name    The string used to uniquely identify this plugin.
 	 */
-	protected $RestKeyAuth = 'key-auth';
+	protected $name = 'key-auth';
 
 	/**
 	 * The current version of the plugin.
@@ -83,7 +83,7 @@ class Plugin {
 	private function set_locale() {
 
 		$plugin_i18n = new I18n();
-		$plugin_i18n->set_domain( $this->get_RestKeyAuth() );
+		$plugin_i18n->set_domain( $this->get_name() );
 		$plugin_i18n->load_plugin_textdomain();
 
 	}
@@ -129,15 +129,15 @@ class Plugin {
 	 * @since     1.0.0
 	 * @return    string    The name of the plugin.
 	 */
-	public function get_RestKeyAuth() {
-		return $this->RestKeyAuth;
+	public function get_name() {
+		return $this->name;
 	}
 
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    RestKeyAuth_Loader    Orchestrates the hooks of the plugin.
+	 * @return    RESTKeyAuth_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

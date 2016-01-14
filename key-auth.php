@@ -7,7 +7,7 @@
  *
  * @link              http://log.pt/
  * @since             1.0.0
- * @package           RestKeyAuth
+ * @package           RESTKeyAuth
  *
  * @wordpress-plugin
  * Plugin Name:       WP REST API Key Authentication
@@ -37,6 +37,6 @@ if ( ! defined( 'WPINC' ) ) {
  * @since    1.0.0
  */
 \add_action( 'plugins_loaded', function () {
-    $plugin = new \logoscon\RestKeyAuth\Plugin();
+    $plugin = new \logoscon\RESTKeyAuth\Plugin();
     $plugin->run();
 } );

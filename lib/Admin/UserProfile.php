@@ -7,8 +7,8 @@
  * @link       http://log.pt/
  * @since      1.0.0
  *
- * @package    RestKeyAuth
- * @subpackage RestKeyAuth/lib/Admin
+ * @package    RESTKeyAuth
+ * @subpackage RESTKeyAuth/lib/Admin
  */
 ?>
 <table class="form-table">

@@ -6,11 +6,11 @@
  * @link       http://log.pt/
  * @since      1.0.0
  *
- * @package    RestKeyAuth
- * @subpackage RestKeyAuth/lib
+ * @package    RESTKeyAuth
+ * @subpackage RESTKeyAuth/lib
  */
 
-namespace logoscon\RestKeyAuth;
+namespace logoscon\RESTKeyAuth;
 
 /**
  * The dashboard-specific functionality of the plugin.
@@ -18,8 +18,8 @@ namespace logoscon\RestKeyAuth;
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the dashboard-specific stylesheet and JavaScript.
  *
- * @package    RestKeyAuth
- * @subpackage RestKeyAuth/lib
+ * @package    RESTKeyAuth
+ * @subpackage RESTKeyAuth/lib
  * @author     log.OSCON, Lda. <engenharia@log.pt>
  */
 class Admin {

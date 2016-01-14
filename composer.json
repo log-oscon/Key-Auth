@@ -23,12 +23,12 @@
   },
   "autoload": {
     "psr-4": {
-      "logoscon\\RestKeyAuth\\": "lib/"
+      "logoscon\\RESTKeyAuth\\": "lib/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "logoscon\\Tests\\RestKeyAuth\\": "tests/"
+      "logoscon\\Tests\\RESTKeyAuth\\": "tests/"
     }
   },
   "require": {

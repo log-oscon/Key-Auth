@@ -6,11 +6,11 @@
  * @link       http://log.pt/
  * @since      1.0.0
  *
- * @package    RestKeyAuth
- * @subpackage RestKeyAuth/lib
+ * @package    RESTKeyAuth
+ * @subpackage RESTKeyAuth/lib
  */
 
-namespace logoscon\RestKeyAuth;
+namespace logoscon\RESTKeyAuth;
 
 /**
  * Register all actions and filters for the plugin.
@@ -19,8 +19,8 @@ namespace logoscon\RestKeyAuth;
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    RestKeyAuth
- * @subpackage RestKeyAuth/lib
+ * @package    RESTKeyAuth
+ * @subpackage RESTKeyAuth/lib
  * @author     log.OSCON, Lda. <engenharia@log.pt>
  */
 class Loader {
