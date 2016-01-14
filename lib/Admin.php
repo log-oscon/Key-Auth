@@ -84,7 +84,7 @@ class Admin {
 			'request_method' => $_SERVER[ 'REQUEST_METHOD' ],
 			'request_post'   => $_POST,
 			'request_uri'    => $_SERVER[ 'REQUEST_URI' ],
-			'timestamp'      => $_SERVER[ 'HTTP_X_API_TIMESTAMP' ],
+			'timestamp'      => intval( $_SERVER[ 'HTTP_X_API_TIMESTAMP' ] ),
 		);
 
 		$user_secret   = \get_user_meta( $user_id, 'rest_api_secret', true );
