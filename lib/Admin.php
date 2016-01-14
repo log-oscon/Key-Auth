@@ -47,7 +47,7 @@ class Admin {
 	/**
 	 * The primary handler for user authentication.
 	 *
-	 * @since     0.1.0
+	 * @since     1.0.0
 	 * @param     mixed    $user    User ID if one has been determined, false otherwise.
 	 * @return    mixed             A user on success, or false on failure.
 	 */
@@ -120,7 +120,7 @@ class Admin {
 	 * Fetches a user ID by API key.
 	 *
 	 * @access    private
-	 * @since     0.1.0
+	 * @since     1.0.0
 	 * @param     string    $api_key    The API key attached to a user.
 	 * @return    mixed                 A user ID on success, or false on failure.
 	 */
@@ -185,7 +185,7 @@ class Admin {
 	 * Generate a hash signature.
 	 *
 	 * @access    private
-	 * @since     0.1.0
+	 * @since     1.0.0
 	 * @param     array     $args      The arguments used for generating the signature. They should be, in order:
 	 *                                 'api_key', 'timestamp', 'request_method', and 'request_uri'.
 	 *                                 Timestamp should be the timestamp passed in the request.
