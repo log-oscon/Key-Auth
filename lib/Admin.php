@@ -88,7 +88,7 @@ class Admin {
 		);
 
 		$user_secret = \get_user_meta( $user_id, 'rest_api_secret', true );
-		$signature   = self::generate_signature( $signature_args, $user_secret );
+		$signature   = $this->generate_signature( $signature_args, $user_secret );
 
 		if ( $signature !== $_SERVER[ 'HTTP_X_API_SIGNATURE' ] ) {
 			$this->set_response_headers( 'FAIL signature' );
