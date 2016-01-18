@@ -93,6 +93,7 @@ class Admin {
 			'timestamp'      => intval( $_SERVER[ 'HTTP_X_API_TIMESTAMP' ] ),
 		);
 
+		// FIXME
 		if ( defined( 'WP_ENV' ) && WP_ENV === 'development' ) {
 			unset( $signature_args[ 'ip' ] );
 		}
