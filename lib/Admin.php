@@ -12,6 +12,8 @@
 
 namespace logoscon\RESTKeyAuth;
 
+use VectorFace\Whip\Whip;
+
 /**
  * The dashboard-specific functionality of the plugin.
  *
@@ -77,15 +79,23 @@ class Admin {
 			return false;
 		}
 
+		// Get the request IP address
+		$whip    = new Whip( Whip::PROXY_HEADERS | Whip::REMOTE_ADDR );
+		$address = $whip->getValidIpAddress();
+
 		// Check for the proper HTTP Parameters
 		$signature_args = array(
 			'api_key'        => $_SERVER[ 'HTTP_X_API_KEY' ],
-			'ip'             => $_SERVER[ 'REMOTE_ADDR' ],
+			'ip'             => $address,
 			'request_method' => $_SERVER[ 'REQUEST_METHOD' ],
 			'request_post'   => $_POST,
 			'request_uri'    => $_SERVER[ 'REQUEST_URI' ],
 			'timestamp'      => intval( $_SERVER[ 'HTTP_X_API_TIMESTAMP' ] ),
 		);
+
+		if ( defined( 'WP_ENV' ) && WP_ENV === 'development' ) {
+			unset( $signature_args[ 'ip' ] );
+		}
 
 		$user_secret = \get_user_meta( $user_id, 'rest_api_secret', true );
 		$signature   = $this->generate_signature( $signature_args, $user_secret );
