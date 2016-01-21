@@ -107,7 +107,7 @@ class Admin {
 		}
 
 		// Set headers
-		$this->set_response_headers( 'OK ' . $user_id );
+		$this->set_response_headers( 'OK' );
 
 		return $user_id;
 	}
