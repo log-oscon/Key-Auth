@@ -32,7 +32,8 @@
     }
   },
   "require": {
-    "composer/installers": "~1.0"
+    "composer/installers": "~1.0",
+    "vectorface/whip": "^0.2.1"
   },
   "require-dev": {
     "phpunit/phpunit": "*@stable",
