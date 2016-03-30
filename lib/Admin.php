@@ -66,7 +66,7 @@ class Admin {
 		}
 
 		// Fetch user ID
-		$user_id = $this->find_user_id_by_key( $_SERVER[ 'HTTP_X_API_KEY' ] );
+		$user_id = $this->find_user_id_by_key( $_SERVER['HTTP_X_API_KEY'] );
 
 		if ( ! $user_id ) {
 			$this->set_response_headers( 'FAIL api key' );
@@ -85,23 +85,23 @@ class Admin {
 
 		// Check for the proper HTTP Parameters
 		$signature_args = array(
-			'api_key'        => $_SERVER[ 'HTTP_X_API_KEY' ],
+			'api_key'        => $_SERVER['HTTP_X_API_KEY'],
 			'ip'             => $address,
-			'request_method' => $_SERVER[ 'REQUEST_METHOD' ],
+			'request_method' => $_SERVER['REQUEST_METHOD'],
 			'request_post'   => $_POST,
-			'request_uri'    => $_SERVER[ 'REQUEST_URI' ],
-			'timestamp'      => intval( $_SERVER[ 'HTTP_X_API_TIMESTAMP' ] ),
+			'request_uri'    => $_SERVER['REQUEST_URI'],
+			'timestamp'      => intval( $_SERVER['HTTP_X_API_TIMESTAMP'] ),
 		);
 
 		// FIXME
 		if ( defined( 'WP_ENV' ) && WP_ENV === 'development' ) {
-			unset( $signature_args[ 'ip' ] );
+			unset( $signature_args['ip'] );
 		}
 
 		$user_secret = \get_user_meta( $user_id, 'rest_api_secret', true );
 		$signature   = $this->generate_signature( $signature_args, $user_secret );
 
-		if ( $signature !== $_SERVER[ 'HTTP_X_API_SIGNATURE' ] ) {
+		if ( $signature !== $_SERVER['HTTP_X_API_SIGNATURE'] ) {
 			$this->set_response_headers( 'FAIL signature' );
 			return false;
 		}
@@ -121,9 +121,9 @@ class Admin {
 	 */
 	private function check_request_headers() {
 		return
-			isset( $_SERVER[ 'HTTP_X_API_KEY' ] ) &&
-			isset( $_SERVER[ 'HTTP_X_API_TIMESTAMP' ] ) &&
-			isset( $_SERVER[ 'HTTP_X_API_SIGNATURE' ] );
+			isset( $_SERVER['HTTP_X_API_KEY'] ) &&
+			isset( $_SERVER['HTTP_X_API_TIMESTAMP'] ) &&
+			isset( $_SERVER['HTTP_X_API_SIGNATURE'] );
 	}
 
 	/**
@@ -185,7 +185,7 @@ class Admin {
 	 */
 	private function valid_timestamp() {
 
-		$timestamp = intval( $_SERVER[ 'HTTP_X_API_TIMESTAMP' ] );
+		$timestamp = intval( $_SERVER['HTTP_X_API_TIMESTAMP'] );
 		$interval  = \apply_filters( 'rest_key_auth_timestamp_interval', 5 * MINUTE_IN_SECONDS );
 
 		return abs( time() - $timestamp ) <= $interval;
@@ -231,12 +231,12 @@ class Admin {
 	public function user_profile_update( $user_id ) {
 
 		// Regenerate API key
-		if ( isset( $_POST[ 'reset_rest_api_key' ] ) && $_POST[ 'reset_rest_api_key' ] ) {
+		if ( isset( $_POST['reset_rest_api_key'] ) && $_POST['reset_rest_api_key'] ) {
 			\update_user_meta( $user_id, 'rest_api_key', \wp_generate_password( 32, false ) );
 		}
 
 		// Regenerate API secret
-		if ( isset( $_POST[ 'reset_rest_api_secret' ] ) && $_POST[ 'reset_rest_api_secret' ] ) {
+		if ( isset( $_POST['reset_rest_api_secret'] ) && $_POST['reset_rest_api_secret'] ) {
 			\update_user_meta( $user_id, 'rest_api_secret', \wp_generate_password( 32, false ) );
 		}
 
