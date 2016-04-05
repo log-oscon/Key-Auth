@@ -99,7 +99,7 @@ class Plugin {
 
 		$admin = new Admin( $this );
 
-		$this->loader->add_filter( 'determine_current_user',   $admin, 'auth_handler', 20 );
+		$this->loader->add_filter( 'determine_current_user',   $admin, 'auth_handler', 99 );
 
 		$this->loader->add_action( 'show_user_profile',        $admin, 'user_profile', 90 );
 		$this->loader->add_action( 'edit_user_profile',        $admin, 'user_profile', 90 );
