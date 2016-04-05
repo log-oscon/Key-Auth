@@ -32,12 +32,11 @@
     }
   },
   "require": {
-    "composer/installers": "~1.0",
-    "vectorface/whip": "^0.2.1"
+    "composer/installers": "~1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "*@stable",
-    "wp-coding-standards/wpcs": "dev-develop"
+    "wp-coding-standards/wpcs": "dev-master"
   },
   "suggest": {}
 }
