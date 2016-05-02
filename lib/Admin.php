@@ -67,13 +67,13 @@ class Admin {
 		$user_id = $this->find_user_id_by_key( $_SERVER['HTTP_X_API_KEY'] );
 
 		if ( ! $user_id ) {
-			$this->set_response_headers( 'FAIL api key' );
+			$this->set_response_headers( 'Invalid API KEY.' );
 			return false;
 		}
 
 		// Check timestamp
 		if ( ! $this->valid_timestamp() ) {
-			$this->set_response_headers( 'FAIL timestamp' );
+			$this->set_response_headers( 'Invalid timestamp.' );
 			return false;
 		}
 
@@ -95,7 +95,7 @@ class Admin {
 		}
 
 		if ( $signature !== $_SERVER['HTTP_X_API_SIGNATURE'] ) {
-			$this->set_response_headers( 'FAIL signature' );
+			$this->set_response_headers( 'Invalid API signature.' );
 			return false;
 		}
 
