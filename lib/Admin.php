@@ -89,10 +89,10 @@ class Admin {
 		$user_secret = \get_user_meta( $user_id, 'rest_api_secret', true );
 		$signature   = $this->generate_signature( $signature_args, $user_secret );
 
-		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		// if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			error_log( var_export( $signature_args, true ) );
 			error_log( var_export( $signature, true ) );
-		}
+		// }
 
 		if ( $signature !== $_SERVER['HTTP_X_API_SIGNATURE'] ) {
 			$this->set_response_headers( 'Invalid API signature.' );
