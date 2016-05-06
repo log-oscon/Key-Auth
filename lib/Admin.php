@@ -89,6 +89,8 @@ class Admin {
 		$user_secret = \get_user_meta( $user_id, 'rest_api_secret', true );
 		$signature   = $this->generate_signature( $signature_args, $user_secret );
 
+		error_log(print_r($signature_args,true));
+		error_log(print_r($signature,true));
 		// if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 			error_log( var_export( $signature_args, true ) );
 			error_log( var_export( $signature, true ) );
