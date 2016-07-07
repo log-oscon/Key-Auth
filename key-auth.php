@@ -1,5 +1,4 @@
 <?php
-
 /**
  * WP REST API Key Authentication
  *
@@ -34,9 +33,16 @@ if ( ! defined( 'WPINC' ) ) {
 /**
  * Begins execution of the plugin.
  *
- * @since    1.0.0
+ * @since 1.0.0
  */
 \add_action( 'plugins_loaded', function () {
-    $plugin = new \logoscon\RESTKeyAuth\Plugin();
+    $plugin = new \logoscon\RESTKeyAuth\Plugin( 'key-auth', '1.1.0' );
     $plugin->run();
 } );
+
+/**
+ * Handles the user authentication.
+ *
+ * @since 1.1.0
+ */
+\add_filter( 'determine_current_user', '\logoscon\RESTKeyAuth\Auth::handler', 20 );
