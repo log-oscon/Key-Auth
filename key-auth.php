@@ -13,7 +13,7 @@
  * Plugin Name:       WP REST API Key Authentication
  * Plugin URI:        https://github.com/log-oscon/key-auth/
  * Description:       API/Secret Key Authentication handler for the WP REST API.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Author:            log.OSCON, Lda.
  * Author URI:        http://log.pt/
  * License:           GPL-2.0+

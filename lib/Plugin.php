@@ -32,16 +32,6 @@ namespace logoscon\RESTKeyAuth;
 class Plugin {
 
 	/**
-	 * The loader that's responsible for maintaining and registering all hooks that power
-	 * the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      RESTKeyAuth_Loader    $loader    Maintains and registers all hooks for the plugin.
-	 */
-	protected $loader;
-
-	/**
 	 * The unique identifier of this plugin.
 	 *
 	 * @since    1.0.0
@@ -57,18 +47,14 @@ class Plugin {
 	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
-	protected $version = '1.0.0';
+	protected $version = '1.1.0';
 
 	/**
 	 * Define the core functionality of the plugin.
 	 *
-	 * Create an instance of the loader which will be used to register the hooks
-	 * with WordPress.
-	 *
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		$this->loader = new Loader();
 	}
 
 	/**
@@ -81,11 +67,9 @@ class Plugin {
 	 * @access   private
 	 */
 	private function set_locale() {
-
-		$plugin_i18n = new I18n();
-		$plugin_i18n->set_domain( $this->get_name() );
-		$plugin_i18n->load_plugin_textdomain();
-
+		$i18n = new I18n();
+		$i18n->set_domain( $this->get_name() );
+		$i18n->load_plugin_textdomain();
 	}
 
 	/**
@@ -96,21 +80,15 @@ class Plugin {
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
-
 		$admin = new Admin( $this );
-
-		$this->loader->add_filter( 'determine_current_user',   $admin, 'auth_handler', 20 );
-
-		$this->loader->add_action( 'show_user_profile',        $admin, 'user_profile', 90 );
-		$this->loader->add_action( 'edit_user_profile',        $admin, 'user_profile', 90 );
-		$this->loader->add_action( 'personal_options_update',  $admin, 'user_profile_update' );
-		$this->loader->add_action( 'edit_user_profile_update', $admin, 'user_profile_update' );
-
+		\add_filter( 'determine_current_user',   array( $admin, 'auth_handler' ), 20 );
+		\add_action( 'show_user_profile',        array( $admin, 'user_profile' ), 90 );
+		\add_action( 'edit_user_profile',        array( $admin, 'user_profile' ), 90 );
+		\add_action( 'personal_options_update',  array( $admin, 'user_profile_update' ) );
+		\add_action( 'edit_user_profile_update', array( $admin, 'user_profile_update' ) );
 	}
 
 	/**
-	 * Run the loader to execute all of the hooks with WordPress.
-	 *
 	 * Load the dependencies, define the locale, and set the hooks for the Dashboard and
 	 * the public-facing side of the site.
 	 *
@@ -119,7 +97,6 @@ class Plugin {
 	public function run() {
 		$this->set_locale();
 		$this->define_admin_hooks();
-		$this->loader->run();
 	}
 
 	/**
@@ -131,16 +108,6 @@ class Plugin {
 	 */
 	public function get_name() {
 		return $this->name;
-	}
-
-	/**
-	 * The reference to the class that orchestrates the hooks with the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    RESTKeyAuth_Loader    Orchestrates the hooks of the plugin.
-	 */
-	public function get_loader() {
-		return $this->loader;
 	}
 
 	/**

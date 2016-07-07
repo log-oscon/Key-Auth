@@ -48,19 +48,19 @@ class Admin {
 	 * The primary handler for user authentication.
 	 *
 	 * @since     1.0.0
-	 * @param     mixed    $user    User ID if one has been determined, false otherwise.
-	 * @return    mixed             A user on success, or false on failure.
+	 * @param     int|bool    $user_id    User ID if one has been determined, false otherwise.
+	 * @return    mixed                   User ID if one has been determined, false otherwise.
 	 */
-	public function auth_handler( $user ) {
+	public function auth_handler( $user_id ) {
 
 		// Don't authenticate twice
-		if ( ! empty( $user ) ) {
-			return $user;
+		if ( ! empty( $user_id ) ) {
+			return $user_id;
 		}
 
 		// Check for request headers
 		if ( ! $this->check_request_headers() ) {
-			return $user;
+			return $user_id;
 		}
 
 		// Fetch user ID
