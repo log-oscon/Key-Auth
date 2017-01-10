@@ -65,7 +65,7 @@ class Auth {
 		$user_secret = \get_user_meta( $user_id, 'rest_api_secret', true );
 		$signature   = static::generate_signature( $signature_args, $user_secret );
 
-		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+		if ( defined( 'KEY_AUTH_DEBUG' ) && KEY_AUTH_DEBUG ) {
 			error_log( var_export( $signature_args, true ) );
 			error_log( var_export( $signature, true ) );
 		}

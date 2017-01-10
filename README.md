@@ -13,8 +13,11 @@ to use the plugin, as it uses custom rewrite rules to power the API.
 
 ## Changelog ##
 
+### 1.1.1 ###
+* Changed the debug key.  
+
 ### 1.1.0 ###
-* Removed the Loader class.  
+* Removed the Loader class.
 
 ### 1.0.0 ###
-* Initial release.  
+* Initial release.
